@@ -1,6 +1,5 @@
 const client = require('./setup');
 const { prefix } = require('../config.json');
-const commands = require('./commands');
 
 client.on('message', async (message) => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -8,8 +7,10 @@ client.on('message', async (message) => {
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
+  if (!client.commands.has(command)) return;
+
   try {
-    commands[command](message);
+    client.commands.get(command).run(message, args);
   } catch (error) {
     console.error(error);
     message.reply('There was an error trying to execute that command');
