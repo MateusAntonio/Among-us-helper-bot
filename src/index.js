@@ -8,5 +8,10 @@ client.on('message', async (message) => {
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
-  commands[command](message);
+  try {
+    commands[command](message);
+  } catch (error) {
+    console.error(error);
+    message.reply('There was an error trying to execute that command');
+  }
 });
