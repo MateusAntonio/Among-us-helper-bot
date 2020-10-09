@@ -30,25 +30,30 @@ const clear = (message) => {
 };
 
 const mute = async (message) => {
-  const members = await message.guild.members.fetch();
+  if (!message.member.voice.channel)
+    return message.reply('You need to be connected into a voice channel');
+
+  const members = message.member.voice.channel.members;
+
+  message.reply('Muting members...');
   members.map((member) => {
-    if (!member.voice.channel) return;
     console.log('Members to be muted: ', member.displayName);
-    message.reply('Muting all members...');
-    member.voice.setDeaf(true, 'Game running');
-    member.voice.setMute(true, 'Game running');
+    member.voice.setDeaf(true, 'Game running!');
+    member.voice.setMute(true, 'Game running!');
   });
 };
 
 const unmute = async (message) => {
-  const members = await message.guild.members.fetch();
+  if (!message.member.voice.channel)
+    return message.reply('You need to be connected into a voice channel');
+
+  const members = message.member.voice.channel.members;
+
+  message.reply('Unmuting members...');
   members.map((member) => {
-    if (!member.voice.channel) return;
     console.log('Members to be unmuted: ', member.displayName);
-    message.reply('Unmuting all members...');
-    console.log(member.displayName);
-    member.voice.setDeaf(false, 'Discuss');
-    member.voice.setMute(false, 'Discuss');
+    member.voice.setDeaf(false, 'Discuss time!');
+    member.voice.setMute(false, 'Discuss time!');
   });
 };
 
