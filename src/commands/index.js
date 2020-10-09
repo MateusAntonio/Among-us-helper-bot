@@ -11,24 +11,6 @@ const server = (message) => {
   );
 };
 
-const avatar = (message) => {
-  if (!message.mentions.users.size) {
-    return message.channel.send(
-      `Your avatar: <${message.author.displayAvatarURL({
-        format: 'png',
-        dynamic: true,
-      })}>`
-    );
-  }
-  const avatarList = message.mentions.users.map((user) => {
-    return `${user.username}'s avatar: <${user.displayAvatarURL({
-      format: 'png',
-      dynamic: true,
-    })}>`;
-  });
-  message.channel.send(avatarList);
-};
-
 const join = async (message) => {
   if (message.member.voice.channel) {
     const connection = await message.member.voice.channel.join();
@@ -44,13 +26,12 @@ const leave = async (message) => {
 };
 
 const clear = (message) => {
-  message.channel.bulkDelete(100);
+  message.channel.bulkDelete(100, true);
 };
 
 module.exports = {
   mention,
   server,
-  avatar,
   join,
   leave,
   clear,
