@@ -7,7 +7,12 @@ client.on('message', async (message) => {
   const args = message.content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift().toLowerCase();
 
-  if (!client.commands.has(command)) return;
+  if (!client.commands.has(command)) {
+    message.reply(
+      'Ops! This command is not supported! Try `!help` to see the supported commands.'
+    );
+    return;
+  }
 
   try {
     client.commands.get(command).run(message, args);

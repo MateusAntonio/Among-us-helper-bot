@@ -2,7 +2,7 @@ const MUTE = true;
 
 module.exports = {
   name: 'mute',
-  description: '',
+  description: 'Mutes all users in a channel',
   run(message, args) {
     if (!message.member.voice.channel)
       return message.reply('You need to be connected into a voice channel');

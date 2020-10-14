@@ -2,7 +2,7 @@ const UNMUTE = false;
 
 module.exports = {
   name: 'unmute',
-  description: '',
+  description: 'Unmuttes all users in a channel',
   run(message) {
     if (!message.member.voice.channel)
       return message.reply('You need to be connected into a voice channel');
