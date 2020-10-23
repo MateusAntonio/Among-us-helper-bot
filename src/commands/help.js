@@ -6,12 +6,27 @@ const commandFiles = fs
 module.exports = {
   name: 'help',
   description: 'Show all available commands',
-  run(message) {
-    var allCommands = '';
+  usage: '!help <command>',
+  run(message, args) {
+    const commandOptions = {};
 
     commandFiles.forEach((file) => {
       const command = require(`./${file}`);
-      allCommands = `${allCommands}\n${command.name} - ${command.description}`;
+      commandOptions[command.name] = command;
+    });
+
+    const specificCommand = args[0] || '';
+
+    if (commandOptions.hasOwnProperty(specificCommand)) {
+      const command = commandOptions[specificCommand];
+      message.reply(
+        `\n${command.name} - ${command.description}\nUsage: ${command.usage}`
+      );
+      return null;
+    }
+
+    const allCommands = commandOptions.map((command) => {
+      `${allCommands}\n${command.name} - ${command.description}`;
     });
 
     message.reply(
